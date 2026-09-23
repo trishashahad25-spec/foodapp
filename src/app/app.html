@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Zomato - Food Delivery App</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: #e23744 !important;
+            padding: 12px 0;
+        }
+
+        .navbar-brand {
+            font-size: 28px;
+            font-weight: bold;
+            color: white !important;
+        }
+
+        .navbar-brand i {
+            margin-right: 5px;
+        }
+
+        .nav-link {
+            color: white !important;
+            font-weight: 500;
+            margin: 0 5px;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #ffd6d9 !important;
+            transform: translateY(-1px);
+        }
+
+        .btn-login {
+            border: 1px solid white;
+            color: white;
+            border-radius: 25px;
+            padding: 7px 18px;
+        }
+
+        .btn-login:hover {
+            background: white;
+            color: #e23744;
+        }
+
+        .btn-register {
+            background: white;
+            color: #e23744;
+            border-radius: 25px;
+            padding: 7px 18px;
+            font-weight: bold;
+        }
+
+        .btn-register:hover {
+            background: #ffe5e7;
+            color: #c51f2d;
+        }
+
+        /* Pages */
+        .page {
+            display: none;
+            min-height: calc(100vh - 72px);
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 600px;
+            background:
+                linear-gradient(
+                    rgba(0, 0, 0, 0.55),
+                    rgba(0, 0, 0, 0.55)
+                ),
+                url("https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1600&q=80")
+                center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content h1 {
+            font-size: 55px;
+            font-weight: bold;
+        }
+
+        .hero-content p {
+            font-size: 21px;
+        }
+
+        .search-box {
+            max-width: 750px;
+            margin: 30px auto;
+        }
+
+        .search-box .form-control {
+            height: 55px;
+            border-radius: 30px 0 0 30px;
+            border: none;
+        }
+
+        .search-box .btn {
+            border-radius: 0 30px 30px 0;
+            background: #e23744;
+            border: none;
+            padding: 0 30px;
+        }
+
+        /* Cards */
+        .food-card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: 0.3s;
+            background: white;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .food-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .food-card img {
+            height: 210px;
+            object-fit: cover;
+        }
+
+        .section-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 40px;
+        }
+
+        /* Service cards */
+        .service-card {
+            padding: 35px 20px;
+            border-radius: 15px;
+            background: white;
+            text-align: center;
+            height: 100%;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-7px);
+        }
+
+        .service-icon {
+            font-size: 45px;
+            color: #e23744;
+            margin-bottom: 20px;
+        }
+
+        /* Auth */
+        .auth-container {
+            min-height: calc(100vh - 72px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 15px;
+            background:
+                linear-gradient(
+                    rgba(226, 55, 68, 0.9),
+                    rgba(226, 55, 68, 0.9)
+                ),
+                url("https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=1600&q=80")
+                center/cover;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 450px;
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.25);
+        }
+
+        .auth-card h2 {
+            color: #e23744;
+            font-weight: bold;
+        }
+
+        .auth-card .form-control {
+            height: 48px;
+            border-radius: 10px;
+        }
+
+        .auth-btn {
+            background: #e23744;
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .auth-btn:hover {
+            background: #c91f2c;
+            color: white;
+        }
+
+        /* Contact */
+        .contact-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        /* Footer */
+        footer {
+            background: #222;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 38px;
+            }
+
+            .hero-content p {
+                font-size: 17px;
+            }
+
+            .search-box {
+                padding: 0 15px;
+            }
+
+            .navbar-nav {
+                padding-top: 10px;
+            }
+
+            .auth-card {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+
+        <a class="navbar-brand" href="#home">
+            <i class="bi bi-egg-fried"></i>
+            Zomato
+        </a>
+
+        <!-- Mobile Toggle -->
+        <button
+            class="navbar-toggler bg-white"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarMenu"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarMenu">
+
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#home">
+                        <i class="bi bi-house"></i> Home
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">
+                        <i class="bi bi-info-circle"></i> About
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#services">
+                        <i class="bi bi-grid"></i> Services
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">
+                        <i class="bi bi-telephone"></i> Contact Us
+                    </a>
+                </li>
+
+                <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+                    <a class="nav-link btn-login text-center" href="#login">
+                        <i class="bi bi-box-arrow-in-right"></i>
+                        Login
+                    </a>
+                </li>
+
+                <li class="nav-item ms-lg-2 mt-2 mt-lg-0">
+                    <a class="nav-link btn-register text-center" href="#register">
+                        <i class="bi bi-person-plus"></i>
+                        Sign Up
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+
+<!-- ================= HOME PAGE ================= -->
+
+<section id="home" class="page active">
+
+    <div class="hero">
+
+        <div class="hero-content container">
+
+            <h1>Discover the best food near you</h1>
+
+            <p>
+                Order delicious food from your favourite restaurants
+            </p>
+
+            <div class="input-group search-box">
+
+                <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Search for restaurants, cuisines or dishes..."
+                    id="foodSearch"
+                >
+
+                <button class="btn btn-danger" onclick="searchFood()">
+                    <i class="bi bi-search"></i>
+                    Search
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="container py-5">
+
+        <h2 class="text-center section-title">
+            Popular Food
+        </h2>
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+                <div class="food-card">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80"
+                        class="w-100"
+                    >
+
+                    <div class="p-3">
+                        <h4>Pizza</h4>
+                        <p class="text-muted">
+                            Cheese loaded delicious pizzas
+                        </p>
+                        <span class="badge bg-danger">
+                            Starting ₹199
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="col-md-4">
+                <div class="food-card">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1571091718767-18b5b1457add?auto=format&fit=crop&w=800&q=80"
+                        class="w-100"
+                    >
+
+                    <div class="p-3">
+                        <h4>Burger</h4>
+                        <p class="text-muted">
+                            Juicy burgers with fresh ingredients
+                        </p>
+                        <span class="badge bg-danger">
+                            Starting ₹149
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div class="col-md-4">
+                <div class="food-card">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1603133872878-684f208fb84b?auto=format&fit=crop&w=800&q=80"
+                        class="w-100"
+                    >
+
+                    <div class="p-3">
+                        <h4>Indian Meals</h4>
+                        <p class="text-muted">
+                            Authentic Indian food and thalis
+                        </p>
+                        <span class="badge bg-danger">
+                            Starting ₹129
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+
+<!-- ================= ABOUT PAGE ================= -->
+
+<section id="about" class="page">
+
+    <div class="container py-5">
+
+        <h1 class="text-center section-title">
+            About Zomato
+        </h1>
+
+        <div class="row align-items-center">
+
+            <div class="col-md-6">
+
+                <img
+                    src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1000&q=80"
+                    class="img-fluid rounded-4 shadow"
+                >
+
+            </div>
+
+            <div class="col-md-6 mt-4 mt-md-0">
+
+                <h2>Food at your fingertips ❤️</h2>
+
+                <p class="lead">
+                    Welcome to Zomato, your favourite destination
+                    for discovering amazing food and restaurants.
+                </p>
+
+                <p>
+                    Our platform helps customers discover restaurants,
+                    explore menus and order their favourite meals from
+                    the comfort of their homes.
+                </p>
+
+                <p>
+                    From quick snacks to delicious dinners,
+                    discover something tasty for every occasion.
+                </p>
+
+                <a href="#services" class="btn btn-danger">
+                    Explore Services
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= SERVICES PAGE ================= -->
+
+<section id="services" class="page">
+
+    <div class="container py-5">
+
+        <h1 class="text-center section-title">
+            Our Services
+        </h1>
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+
+                <div class="service-card">
+
+                    <div class="service-icon">
+                        <i class="bi bi-bicycle"></i>
+                    </div>
+
+                    <h3>Food Delivery</h3>
+
+                    <p>
+                        Get your favourite food delivered quickly
+                        and conveniently to your doorstep.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="service-card">
+
+                    <div class="service-icon">
+                        <i class="bi bi-shop"></i>
+                    </div>
+
+                    <h3>Restaurant Discovery</h3>
+
+                    <p>
+                        Discover the best restaurants and cuisines
+                        available around you.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="service-card">
+
+                    <div class="service-icon">
+                        <i class="bi bi-star"></i>
+                    </div>
+
+                    <h3>Reviews & Ratings</h3>
+
+                    <p>
+                        Check ratings and reviews before deciding
+                        where to order your next meal.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CONTACT PAGE ================= -->
+
+<section id="contact" class="page">
+
+    <div class="container py-5">
+
+        <h1 class="text-center section-title">
+            Contact Us
+        </h1>
+
+        <div class="row justify-content-center">
+
+            <div class="col-md-8">
+
+                <div class="contact-card">
+
+                    <form onsubmit="submitContact(event)">
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Name
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="contactName"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Email
+                            </label>
+
+                            <input
+                                type="email"
+                                class="form-control"
+                                id="contactEmail"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Message
+                            </label>
+
+                            <textarea
+                                class="form-control"
+                                rows="5"
+                                id="contactMessage"
+                                required
+                            ></textarea>
+
+                        </div>
+
+
+                        <button class="btn btn-danger w-100">
+                            Send Message
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= LOGIN PAGE ================= -->
+
+<section id="login" class="page">
+
+    <div class="auth-container">
+
+        <div class="auth-card">
+
+            <div class="text-center mb-4">
+
+                <i
+                    class="bi bi-person-circle"
+                    style="font-size: 55px; color:#e23744;"
+                ></i>
+
+                <h2>Welcome Back!</h2>
+
+                <p class="text-muted">
+                    Login to your Zomato account
+                </p>
+
+            </div>
+
+
+            <div
+                id="loginAlert"
+                class="alert d-none"
+            ></div>
+
+
+            <form onsubmit="loginUser(event)">
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="loginUsername"
+                        placeholder="Enter username"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        class="form-control"
+                        id="loginPassword"
+                        placeholder="Enter password"
+                        required
+                    >
+
+                </div>
+
+
+                <button class="auth-btn">
+                    <i class="bi bi-box-arrow-in-right"></i>
+                    Login
+                </button>
+
+            </form>
+
+
+            <p class="text-center mt-4">
+
+                Don't have an account?
+
+                <a
+                    href="#register"
+                    style="color:#e23744; font-weight:bold;"
+                >
+                    Sign Up
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= REGISTER PAGE ================= -->
+
+<section id="register" class="page">
+
+    <div class="auth-container">
+
+        <div class="auth-card">
+
+            <div class="text-center mb-4">
+
+                <i
+                    class="bi bi-person-plus-fill"
+                    style="font-size: 55px; color:#e23744;"
+                ></i>
+
+                <h2>Create Account</h2>
+
+                <p class="text-muted">
+                    Join Zomato today
+                </p>
+
+            </div>
+
+
+            <div
+                id="registerAlert"
+                class="alert d-none"
+            ></div>
+
+
+            <form onsubmit="registerUser(event)">
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="registerUsername"
+                        placeholder="Choose username"
+                        required
+                        minlength="3"
+                    >
+
+                    <small class="text-muted">
+                        Minimum 3 characters
+                    </small>
+
+                </div>
+
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        class="form-control"
+                        id="registerEmail"
+                        placeholder="Enter email"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        class="form-control"
+                        id="registerPassword"
+                        placeholder="Create password"
+                        required
+                        minlength="6"
+                    >
+
+                    <small class="text-muted">
+                        Minimum 6 characters
+                    </small>
+
+                </div>
+
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Confirm Password
+                    </label>
+
+                    <input
+                        type="password"
+                        class="form-control"
+                        id="confirmPassword"
+                        placeholder="Confirm password"
+                        required
+                    >
+
+                </div>
+
+
+                <button class="auth-btn">
+                    <i class="bi bi-person-plus"></i>
+                    Create Account
+                </button>
+
+            </form>
+
+
+            <p class="text-center mt-4">
+
+                Already have an account?
+
+                <a
+                    href="#login"
+                    style="color:#e23744; font-weight:bold;"
+                >
+                    Login
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= LOGGED-IN HOME ================= -->
+
+<section id="dashboard" class="page">
+
+    <div class="container py-5 text-center">
+
+        <div class="card shadow border-0 p-5">
+
+            <i
+                class="bi bi-check-circle-fill text-success"
+                style="font-size:70px;"
+            ></i>
+
+            <h1 class="mt-3">
+                Welcome to Zomato!
+            </h1>
+
+            <p class="lead">
+                You are successfully logged in.
+            </p>
+
+            <h4 id="welcomeUser"></h4>
+
+            <button
+                class="btn btn-danger mt-3"
+                onclick="logoutUser()"
+            >
+                <i class="bi bi-box-arrow-right"></i>
+                Logout
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="container">
+
+        <h4>
+            <i class="bi bi-egg-fried"></i>
+            Zomato
+        </h4>
+
+        <p class="mb-0">
+            Discover delicious food. Order. Enjoy. ❤️
+        </p>
+
+        <p class="mt-2 mb-0">
+            © 2026 Zomato App Demo
+        </p>
+
+    </div>
+
+</footer>
+
+
+<!-- Bootstrap JS -->
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+<script>
+
+    /* ============================================
+       SIMPLE ROUTER
+       ============================================ */
+
+    function router() {
+
+        let route = window.location.hash.substring(1);
+
+        if (!route) {
+            route = "home";
+        }
+
+        const pages = document.querySelectorAll(".page");
+
+        pages.forEach(function(page) {
+            page.classList.remove("active");
+        });
+
+
+        const selectedPage = document.getElementById(route);
+
+        if (selectedPage) {
+
+            selectedPage.classList.add("active");
+
+        } else {
+
+            document.getElementById("home").classList.add("active");
+
+        }
+
+
+        // Close mobile navbar after clicking a link
+
+        const navbar = document.getElementById("navbarMenu");
+
+        if (navbar.classList.contains("show")) {
+
+            bootstrap.Collapse
+                .getOrCreateInstance(navbar)
+                .hide();
+
+        }
+
+
+        // Update login state
+
+        updateNavbar();
+
+    }
+
+
+    window.addEventListener("hashchange", router);
+
+    window.addEventListener("load", router);
+
+
+    /* ============================================
+       REGISTER
+       ============================================ */
+
+    function registerUser(event) {
+
+        event.preventDefault();
+
+
+        const username =
+            document.getElementById("registerUsername").value.trim();
+
+        const email =
+            document.getElementById("registerEmail").value.trim();
+
+        const password =
+            document.getElementById("registerPassword").value;
+
+        const confirmPassword =
+            document.getElementById("confirmPassword").value;
+
+        const alertBox =
+            document.getElementById("registerAlert");
+
+
+        // Username validation
+
+        if (username.length < 3) {
+
+            showAlert(
+                alertBox,
+                "Username must contain at least 3 characters.",
+                "danger"
+            );
+
+            return;
+
+        }
+
+
+        // Password validation
+
+        if (password.length < 6) {
+
+            showAlert(
+                alertBox,
+                "Password must contain at least 6 characters.",
+                "danger"
+            );
+
+            return;
+
+        }
+
+
+        // Confirm password
+
+        if (password !== confirmPassword) {
+
+            showAlert(
+                alertBox,
+                "Passwords do not match.",
+                "danger"
+            );
+
+            return;
+
+        }
+
+
+        // Check existing user
+
+        const existingUser =
+            JSON.parse(localStorage.getItem("zomatoUser"));
+
+
+        if (
+            existingUser &&
+            existingUser.username === username
+        ) {
+
+            showAlert(
+                alertBox,
+                "Username already exists. Please choose another.",
+                "danger"
+            );
+
+            return;
+
+        }
+
+
+        // Store user
+
+        const user = {
+
+            username: username,
+
+            email: email,
+
+            password: password
+
+        };
+
+
+        localStorage.setItem(
+            "zomatoUser",
+            JSON.stringify(user)
+        );
+
+
+        showAlert(
+            alertBox,
+            "Registration successful! Redirecting to login...",
+            "success"
+        );
+
+
+        document.querySelector(
+            "#register form"
+        ).reset();
+
+
+        setTimeout(function() {
+
+            window.location.hash = "login";
+
+        }, 1500);
+
+    }
+
+
+    /* ============================================
+       LOGIN
+       ============================================ */
+
+    function loginUser(event) {
+
+        event.preventDefault();
+
+
+        const username =
+            document.getElementById("loginUsername").value.trim();
+
+        const password =
+            document.getElementById("loginPassword").value;
+
+
+        const alertBox =
+            document.getElementById("loginAlert");
+
+
+        // Get registered user
+
+        const storedUser =
+            JSON.parse(localStorage.getItem("zomatoUser"));
+
+
+        // No registered user
+
+        if (!storedUser) {
+
+            showAlert(
+                alertBox,
+                "No account found. Please register first.",
+                "danger"
+            );
+
+            return;
+
+        }
+
+
+        // Validate username
+
+        if (username !== storedUser.username) {
+
+            showAlert(
+                alertBox,
+                "Invalid username.",
+                "danger"
+            );
+
+            return;
+
+        }
+
+
+        // Validate password
+
+        if (password !== storedUser.password) {
+
+            showAlert(
+                alertBox,
+                "Invalid password.",
+                "danger"
+            );
+
+            return;
+
+        }
+
+
+        // Login successful
+
+        sessionStorage.setItem(
+            "zomatoLoggedIn",
+            "true"
+        );
+
+        sessionStorage.setItem(
+            "zomatoUsername",
+            username
+        );
+
+
+        showAlert(
+            alertBox,
+            "Login successful! Welcome to Zomato.",
+            "success"
+        );
+
+
+        setTimeout(function() {
+
+            window.location.hash = "dashboard";
+
+        }, 1000);
+
+    }
+
+
+    /* ============================================
+       LOGOUT
+       ============================================ */
+
+    function logoutUser() {
+
+        sessionStorage.removeItem("zomatoLoggedIn");
+
+        sessionStorage.removeItem("zomatoUsername");
+
+        window.location.hash = "home";
+
+        alert("You have been logged out successfully.");
+
+        updateNavbar();
+
+    }
+
+
+    /* ============================================
+       NAVBAR LOGIN STATE
+       ============================================ */
+
+    function updateNavbar() {
+
+        const loginButton =
+            document.querySelector(".btn-login");
+
+        const registerButton =
+            document.querySelector(".btn-register");
+
+
+        const loggedIn =
+            sessionStorage.getItem("zomatoLoggedIn");
+
+
+        if (loggedIn === "true") {
+
+            loginButton.innerHTML =
+                '<i class="bi bi-person-circle"></i> Dashboard';
+
+            loginButton.href = "#dashboard";
+
+
+            registerButton.innerHTML =
+                '<i class="bi bi-box-arrow-right"></i> Logout';
+
+            registerButton.href = "#home";
+
+            registerButton.onclick = function(event) {
+
+                event.preventDefault();
+
+                logoutUser();
+
+            };
+
+        } else {
+
+            loginButton.innerHTML =
+                '<i class="bi bi-box-arrow-in-right"></i> Login';
+
+            loginButton.href = "#login";
+
+
+            registerButton.innerHTML =
+                '<i class="bi bi-person-plus"></i> Sign Up';
+
+            registerButton.href = "#register";
+
+            registerButton.onclick = null;
+
+        }
+
+
+        // Show username on dashboard
+
+        const username =
+            sessionStorage.getItem("zomatoUsername");
+
+        const welcomeUser =
+            document.getElementById("welcomeUser");
+
+
+        if (
+            welcomeUser &&
+            username
+        ) {
+
+            welcomeUser.innerText =
+                "Hello, " + username + "!";
+
+        }
+
+    }
+
+
+    /* ============================================
+       ALERT HELPER
+       ============================================ */
+
+    function showAlert(element, message, type) {
+
+        element.className =
+            "alert alert-" + type;
+
+        element.innerText = message;
+
+    }
+
+
+    /* ============================================
+       FOOD SEARCH
+       ============================================ */
+
+    function searchFood() {
+
+        const search =
+            document.getElementById("foodSearch")
+                .value
+                .trim();
+
+
+        if (search === "") {
+
+            alert(
+                "Please enter a restaurant, cuisine or dish."
+            );
+
+            return;
+
+        }
+
+
+        alert(
+            "Searching for: " + search
+        );
+
+    }
+
+
+    /* ============================================
+       CONTACT FORM
+       ============================================ */
+
+    function submitContact(event) {
+
+        event.preventDefault();
+
+        alert(
+            "Thank you! Your message has been submitted."
+        );
+
+        event.target.reset();
+
+    }
+
+</script>
+
+</body>
+</html>
